@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adi Yohanes — Web &amp; ERP Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --accent: #ff6b35;
+            --accent-2: #ffd700;
+            --text-white: #ffffff;
+            --text-gray: #999999;
+            --text-dim: #555555;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            mix-blend-mode: difference;
+        }
+
+        .nav-logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero - Split Screen */
+        .hero-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 100vh;
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 60px;
+            position: relative;
+        }
+
+        .hero-left::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 10%;
+            height: 80%;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .hero-number {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+        }
+
+        .hero-left h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        .hero-left h1 .outline-text {
+            -webkit-text-stroke: 2px var(--text-white);
+            color: transparent;
+        }
+
+        .hero-left h1 .accent-text {
+            color: var(--accent);
+        }
+
+        .hero-left p {
+            font-size: 1.05rem;
+            color: var(--text-gray);
+            max-width: 400px;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 60px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .scroll-line {
+            width: 40px;
+            height: 1px;
+            background: var(--text-dim);
+            animation: scrollAnim 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollAnim {
+            0%, 100% { width: 40px; }
+            50% { width: 60px; }
+        }
+
+        /* Hero Right - Visual */
+        .hero-right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-right::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.15), transparent 70%);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .skill-orbit {
+            position: relative;
+            width: 350px;
+            height: 350px;
+        }
+
+        .orbit-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            z-index: 2;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 25px rgba(255, 107, 53, 0.3);
+        }
+
+        .orbit-center img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            animation: spin 30s linear infinite;
+        }
+
+        .orbit-ring.ring-1 { width: 200px; height: 200px; }
+        .orbit-ring.ring-2 { width: 300px; height: 300px; animation-direction: reverse; animation-duration: 40s; }
+        .orbit-ring.ring-3 { width: 350px; height: 350px; animation-duration: 50s; }
+
+        @keyframes spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .orbit-item {
+            position: absolute;
+            width: 52px;
+            height: 52px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: counter-spin 30s linear infinite;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            cursor: default;
+        }
+
+        .orbit-item:hover {
+            transform: scale(1.15) !important;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.15);
+        }
+
+        .orbit-item svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+
+        @keyframes counter-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+        }
+
+        .orbit-item:nth-child(1) { top: -25px; left: 50%; margin-left: -25px; }
+        .orbit-item:nth-child(2) { bottom: -25px; left: 50%; margin-left: -25px; }
+        .orbit-item:nth-child(3) { top: 50%; left: -25px; margin-top: -25px; }
+        .orbit-item:nth-child(4) { top: 50%; right: -25px; margin-top: -25px; }
+
+        /* Marquee Section */
+        .marquee-section {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 60px;
+            animation: marquee 20s linear infinite;
+            width: max-content;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        .marquee-item {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .marquee-item .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        /* Work Section */
+        .work-section {
+            padding: 120px 60px;
+        }
+
+        .work-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 60px;
+        }
+
+        .work-header h2 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .work-header p {
+            color: var(--text-gray);
+            max-width: 300px;
+            text-align: right;
+        }
+
+        /* Category Filter */
+        .work-categories {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .cat-btn {
+            padding: 8px 22px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: var(--text-gray);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .cat-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-white);
+        }
+
+        .cat-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .work-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .work-card:hover {
+            border-color: var(--accent);
+            transform: scale(1.02);
+        }
+
+        .work-card-image {
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+        }
+
+        .work-card-image.gradient-1 {
+            background: linear-gradient(135deg, #1a1a2e, #2d1b69);
+        }
+
+        .work-card-image.gradient-2 {
+            background: linear-gradient(135deg, #1a2e1a, #1b6929);
+        }
+
+        .work-card-image.gradient-3 {
+            background: linear-gradient(135deg, #2e1a1a, #69301b);
+        }
+
+        .work-card-image.gradient-4 {
+            background: linear-gradient(135deg, #1a2e2e, #1b5569);
+        }
+
+        .work-card-content {
+            padding: 28px;
+        }
+
+        .work-card-content .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+
+        .work-card-content h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .work-card-content p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* Process Section */
+        .process-section {
+            padding: 120px 60px;
+            border-top: 1px solid var(--border);
+        }
+
+        .process-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .process-header h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .process-header p {
+            color: var(--text-gray);
+            font-size: 1.05rem;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .process-step {
+            text-align: center;
+            padding: 30px 20px;
+            position: relative;
+        }
+
+        .process-step::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            font-size: 1.5rem;
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 0 auto 20px;
+        }
+
+        .process-step h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .process-step p {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.08), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .cta-section h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .cta-section p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 18px 48px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 60px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left p {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-right a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-right a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-split { grid-template-columns: 1fr; }
+            .hero-right { display: none; }
+            .hero-left { padding: 120px 40px 60px; }
+            .hero-left h1 { font-size: 2.8rem; }
+            .work-grid { grid-template-columns: 1fr; }
+            .process-steps { grid-template-columns: repeat(2, 1fr); }
+            .process-step::after { display: none; }
+            .work-section, .process-section, .cta-section { padding: 80px 30px; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 15px 20px; }
+            .nav-menu { display: none; }
+            .hero-left h1 { font-size: 2.2rem; }
+            .work-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .work-header p { text-align: left; }
+            .work-categories { gap: 8px; }
+            .cat-btn { padding: 6px 16px; font-size: 0.75rem; }
+            .cta-section h2 { font-size: 2.2rem; }
+            .footer { flex-direction: column; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-logo">Adi Yohanes</div>
+        <ul class="nav-menu">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Split -->
+    <section class="hero-split">
+        <div class="hero-left">
+            <div class="hero-number">001 — PORTFOLIO</div>
+            <h1>
+                <span class="outline-text">Web</span> × <span class="accent-text">ERP</span><br>
+                Developer
+            </h1>
+            <p>Membangun jembatan antara pengalaman web modern dan kekuatan enterprise ERP. Setiap baris kode ditulis untuk menyelesaikan masalah bisnis nyata.</p>
+            <div class="scroll-indicator">
+                <div class="scroll-line"></div>
+                <span>Scroll to explore</span>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="skill-orbit">
+                <div class="orbit-center"><img src="adi.jpg" alt="Adi Yohanes"></div>
+                <div class="orbit-ring ring-1">
+                    <div class="orbit-item" title="React">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="2.5" fill="#61DAFB"/>
+                            <ellipse cx="12" cy="12" rx="9.5" ry="3.5" stroke="#61DAFB" stroke-width="1.6" fill="none" transform="rotate(0 12 12)"/>
+                            <ellipse cx="12" cy="12" rx="9.5" ry="3.5" stroke="#61DAFB" stroke-width="1.6" fill="none" transform="rotate(60 12 12)"/>
+                            <ellipse cx="12" cy="12" rx="9.5" ry="3.5" stroke="#61DAFB" stroke-width="1.6" fill="none" transform="rotate(120 12 12)"/>
+                        </svg>
+                    </div>
+                    <div class="orbit-item" title="Node.js">
+                        <svg viewBox="0 0 24 24" fill="#339933" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 1.5L2.5 7v10L12 22.5 21.5 17V7L12 1.5zm0 2.5l7 4v7l-7 4-7-4V8l7-4z"/>
+                            <circle cx="12" cy="12" r="2" fill="#fff" opacity="0.9"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="orbit-ring ring-2">
+                    <div class="orbit-item" title="TypeScript">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2" y="2" width="20" height="20" rx="4" fill="#3178C6"/>
+                            <text x="12" y="16.5" font-family="Arial, sans-serif" font-weight="900" font-size="11" fill="#fff" text-anchor="middle">TS</text>
+                        </svg>
+                    </div>
+                    <div class="orbit-item" title="PostgreSQL">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse cx="12" cy="5" rx="7" ry="3" fill="#4169E1"/>
+                            <path d="M5 5v14c0 1.66 3.13 3 7 3s7-1.34 7-3V5" stroke="#4169E1" stroke-width="2" fill="none"/>
+                            <ellipse cx="12" cy="17" rx="7" ry="3" stroke="#4169E1" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <div class="orbit-item" title="Next.js">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" fill="#000"/>
+                            <text x="12" y="16.5" font-family="Arial, sans-serif" font-weight="900" font-size="11" fill="#fff" text-anchor="middle">N</text>
+                        </svg>
+                    </div>
+                    <div class="orbit-item" title="Docker">
+                        <svg viewBox="0 0 24 24" fill="#2496ED" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="10" width="4" height="4" rx="0.8" fill="#fff"/>
+                            <rect x="8" y="8" width="4" height="6" rx="0.8" fill="#fff"/>
+                            <rect x="13" y="6" width="4" height="8" rx="0.8" fill="#fff"/>
+                            <rect x="18" y="10" width="3" height="4" rx="0.8" fill="#fff"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="orbit-ring ring-3">
+                    <div class="orbit-item" title="NetSuite">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="12,2 21,7 21,17 12,22 3,17 3,7" stroke="#1D6F42" stroke-width="1.8" fill="none"/>
+                            <text x="12" y="16" font-family="Arial, sans-serif" font-weight="bold" font-size="9" fill="#1D6F42" text-anchor="middle">NS</text>
+                        </svg>
+                    </div>
+                    <div class="orbit-item" title="Git">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="6" cy="6" r="2.5" stroke="#F05032" stroke-width="1.8"/>
+                            <circle cx="18" cy="12" r="2.5" stroke="#F05032" stroke-width="1.8"/>
+                            <circle cx="6" cy="18" r="2.5" stroke="#F05032" stroke-width="1.8"/>
+                            <line x1="8.2" y1="7.5" x2="16" y2="11" stroke="#F05032" stroke-width="1.8"/>
+                            <line x1="8.2" y1="16.5" x2="16" y2="13" stroke="#F05032" stroke-width="1.8"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-item"><span class="dot"></span>React.js</div>
+            <div class="marquee-item"><span class="dot"></span>Next.js</div>
+            <div class="marquee-item"><span class="dot"></span>Node.js</div>
+            <div class="marquee-item"><span class="dot"></span>SuiteScript</div>
+            <div class="marquee-item"><span class="dot"></span>RESTlets</div>
+            <div class="marquee-item"><span class="dot"></span>TypeScript</div>
+            <div class="marquee-item"><span class="dot"></span>NetSuite</div>
+            <div class="marquee-item"><span class="dot"></span>PostgreSQL</div>
+            <div class="marquee-item"><span class="dot"></span>React.js</div>
+            <div class="marquee-item"><span class="dot"></span>Next.js</div>
+            <div class="marquee-item"><span class="dot"></span>Node.js</div>
+            <div class="marquee-item"><span class="dot"></span>SuiteScript</div>
+            <div class="marquee-item"><span class="dot"></span>RESTlets</div>
+            <div class="marquee-item"><span class="dot"></span>TypeScript</div>
+            <div class="marquee-item"><span class="dot"></span>NetSuite</div>
+            <div class="marquee-item"><span class="dot"></span>PostgreSQL</div>
+        </div>
+    </div>
+
+    <!-- Work Section -->
+    <section class="work-section" id="work">
+        <div class="work-header">
+            <h2>Selected<br>Work.</h2>
+            <p>Proyek-proyek yang menunjukkan kemampuan dual-track dalam web dan ERP development.</p>
+        </div>
+        <div class="work-categories">
+            <button class="cat-btn active" data-filter="all">All</button>
+            <button class="cat-btn" data-filter="web">Web App</button>
+            <button class="cat-btn" data-filter="erp">ERP / NetSuite</button>
+            <button class="cat-btn" data-filter="integration">Integration</button>
+            <button class="cat-btn" data-filter="fullstack">Full Stack</button>
+        </div>
+        <div class="work-grid">
+            <div class="work-card" data-category="integration">
+                <div class="work-card-image gradient-1">🔄</div>
+                <div class="work-card-content">
+                    <span class="tag">Integration</span>
+                    <h3>Multi-Channel Order Sync</h3>
+                    <p>Sistem integrasi yang menyatukan order dari 5 marketplace berbeda ke dalam NetSuite secara otomatis.</p>
+                </div>
+            </div>
+            <div class="work-card" data-category="web">
+                <div class="work-card-image gradient-2">📱</div>
+                <div class="work-card-content">
+                    <span class="tag">Web App</span>
+                    <h3>Mobile-First Field Service</h3>
+                    <p>Aplikasi web PWA untuk teknisi lapangan yang terintegrasi dengan work order NetSuite.</p>
+                </div>
+            </div>
+            <div class="work-card" data-category="erp">
+                <div class="work-card-image gradient-3">📈</div>
+                <div class="work-card-content">
+                    <span class="tag">NetSuite</span>
+                    <h3>Financial Consolidation</h3>
+                    <p>Custom SuiteScript untuk konsolidasi laporan keuangan multi-subsidiary secara otomatis.</p>
+                </div>
+            </div>
+            <div class="work-card" data-category="fullstack">
+                <div class="work-card-image gradient-4">🏪</div>
+                <div class="work-card-content">
+                    <span class="tag">Full Stack</span>
+                    <h3>B2B Customer Portal</h3>
+                    <p>Portal self-service untuk pelanggan B2B — order, invoice, dan tracking shipment real-time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section" id="process">
+        <div class="process-header">
+            <h2>My Process</h2>
+            <p>Pendekatan terstruktur untuk setiap proyek</p>
+        </div>
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-number">01</div>
+                <h4>Discover</h4>
+                <p>Memahami business process, pain points, dan goal dari setiap stakeholder.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">02</div>
+                <h4>Design</h4>
+                <p>Merancang arsitektur sistem, data flow, dan UI/UX yang intuitif.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">03</div>
+                <h4>Develop</h4>
+                <p>Membangun dengan clean code, testing, dan dokumentasi yang lengkap.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">04</div>
+                <h4>Deploy</h4>
+                <p>Deployment, monitoring, dan iterasi berdasarkan feedback real users.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="contact">
+        <h2>Let's Build<br>Something Great.</h2>
+        <p>Punya ide proyek yang butuh sentuhan web modern dan ERP expertise?</p>
+            <a href="mailto:adiyohanes19@gmail.com" class="cta-btn">Start a Conversation →</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-left">
+            <p>© 2025 — Crafted with code &amp; coffee</p>
+        </div>
+        <div class="footer-right">
+            <a href="https://www.threads.com/@adiiiiu04" target="_blank">Threads</a>
+            <a href="https://www.instagram.com/adiiiiu04/" target="_blank">Instagram</a>
+            <a href="mailto:adiyohanes19@gmail.com">Email</a>
+        </div>
+    </footer>
+
+    <script>
+        // Work Category Filter
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const filter = this.dataset.filter;
+                document.querySelectorAll('.work-card').forEach(card => {
+                    const match = filter === 'all' || card.dataset.category === filter;
+                    card.style.display = match ? '' : 'none';
+                });
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
