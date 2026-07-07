@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adi Yohanes — Web &amp; ERP Developer</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -132,9 +133,56 @@
         .hero-left p {
             font-size: 1.05rem;
             color: var(--text-gray);
-            max-width: 400px;
-            margin-bottom: 40px;
+            max-width: 420px;
+            margin-bottom: 36px;
             line-height: 1.8;
+        }
+
+        .hero-left p strong {
+            color: var(--text-white);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 30px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hero-btn.primary {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+        }
+
+        .hero-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.3);
+        }
+
+        .hero-btn.secondary {
+            background: transparent;
+            color: var(--text-white);
+            border: 1px solid var(--border);
+        }
+
+        .hero-btn.secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
         }
 
         .scroll-indicator {
@@ -389,6 +437,24 @@
             justify-content: center;
             font-size: 4rem;
             position: relative;
+            overflow: hidden;
+        }
+
+        .work-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .work-card:hover .work-card-image img {
+            transform: scale(1.08);
+        }
+
+        .work-card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
         }
 
         .work-card-image.gradient-1 {
@@ -617,9 +683,74 @@
             .cta-section h2 { font-size: 2.2rem; }
             .footer { flex-direction: column; gap: 20px; }
         }
+
+        /* ===== LOADER ===== */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 28px);
+            gap: 4px;
+        }
+
+        .loader-tile {
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            border-radius: 4px;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .loader-text {
+            margin-top: 32px;
+            font-size: 1rem;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-weight: 600;
+        }
+
+        .loader-progress {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.85rem;
+            color: #ffffff;
+            letter-spacing: 4px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 500px) {
+            .loader-grid {
+                grid-template-columns: repeat(8, 24px);
+                gap: 3px;
+            }
+            .loader-tile {
+                width: 24px;
+                height: 24px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Loader -->
+    <div id="loader">
+        <div class="loader-grid" id="loaderGrid"></div>
+        <div class="loader-text" id="loaderText">Loading</div>
+        <div class="loader-progress" id="loaderProgress">0%</div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-logo">Adi Yohanes</div>
@@ -638,7 +769,11 @@
                 <span class="outline-text">Web</span> × <span class="accent-text">ERP</span><br>
                 Developer
             </h1>
-            <p>Membangun jembatan antara pengalaman web modern dan kekuatan enterprise ERP. Setiap baris kode ditulis untuk menyelesaikan masalah bisnis nyata.</p>
+            <p>Halo! Saya Adi — seorang developer yang suka menjembatani <strong>web modern</strong> dengan <strong>ERP enterprise</strong>. Buat saya, teknologi terbaik adalah yang benar-benar membantu bisnis berkembang, bukan cuma tampil keren.</p>
+            <div class="hero-actions">
+                <a href="#work" class="hero-btn primary">Lihat Project Saya</a>
+                <a href="mailto:adiyohanes19@gmail.com" class="hero-btn secondary">Hubungi Saya</a>
+            </div>
             <div class="scroll-indicator">
                 <div class="scroll-line"></div>
                 <span>Scroll to explore</span>
@@ -749,6 +884,42 @@
             <button class="cat-btn" data-filter="fullstack">Full Stack</button>
         </div>
         <div class="work-grid">
+            <a href="https://dashboard-multi-kost.vercel.app/dashboard" target="_blank" class="work-card-link">
+            <div class="work-card" data-category="web">
+                <div class="work-card-image">
+                    <img src="assets/images/projects/project-web-1/dashboard-kost-ui.png" alt="Dashboard Multi Kost">
+                </div>
+                <div class="work-card-content">
+                    <span class="tag">Web App</span>
+                    <h3>Dashboard Multi Kost</h3>
+                    <p>Aplikasi dashboard manajemen kost modern dengan visualisasi data, manajemen penyewa, dan laporan keuangan interaktif berbasis Next.js.</p>
+                </div>
+            </div>
+            </a>
+            <a href="https://resto-grili.vercel.app/" target="_blank" class="work-card-link">
+            <div class="work-card" data-category="web">
+                <div class="work-card-image">
+                    <img src="assets/images/projects/project-web-2/restaurant.png" alt="Restaurant Landing Page">
+                </div>
+                <div class="work-card-content">
+                    <span class="tag">Web App</span>
+                    <h3>Restaurant Landing Page</h3>
+                    <p>Landing page restoran modern dengan desain responsif, menu interaktif, galeri makanan, dan integrasi pemesanan online yang memikat pengunjung.</p>
+                </div>
+            </div>
+            </a>
+            <a href="https://me-ui-eight.vercel.app/" target="_blank" class="work-card-link">
+            <div class="work-card" data-category="web">
+                <div class="work-card-image">
+                    <img src="assets/images/projects/project-web-3/ui-template.png" alt="UI Template Siap Pakai">
+                </div>
+                <div class="work-card-content">
+                    <span class="tag">Web App</span>
+                    <h3>UI Template Siap Pakai</h3>
+                    <p>Koleksi komponen UI modern yang siap pakai dengan desain clean, reusable, dan responsif — cocok untuk mempercepat pengembangan web.</p>
+                </div>
+            </div>
+            </a>
             <div class="work-card" data-category="integration">
                 <div class="work-card-image gradient-1">🔄</div>
                 <div class="work-card-content">
@@ -834,6 +1005,74 @@
     </footer>
 
     <script>
+        // ===== LOADER GSAP ANIMATION =====
+        // Fallback: remove loader if GSAP fails to load
+        const loaderFallback = setTimeout(function() {
+            const ld = document.getElementById('loader');
+            if (ld) ld.style.display = 'none';
+        }, 6000);
+
+        (function() {
+            const cols = window.innerWidth <= 500 ? 8 : 10;
+            const rows = 8;
+            const grid = document.getElementById('loaderGrid');
+            const textEl = document.getElementById('loaderText');
+            const progressEl = document.getElementById('loaderProgress');
+            const total = cols * rows;
+
+            // Generate tile grid
+            for (let i = 0; i < total; i++) {
+                const tile = document.createElement('div');
+                tile.className = 'loader-tile';
+                grid.appendChild(tile);
+            }
+
+            const tiles = document.querySelectorAll('.loader-tile');
+
+            // Timeline animation
+            const tl = gsap.timeline({
+                onUpdate: function() {
+                    const pct = Math.round(this.progress() * 100);
+                    progressEl.textContent = pct + '%';
+                }
+            });
+
+            tl
+                .from(tiles, {
+                    scale: 0,
+                    opacity: 0,
+                    duration: 0.35,
+                    stagger: 0.022,
+                    ease: 'back.out(1.7)',
+                    transformOrigin: 'center center'
+                })
+                .to(textEl, {
+                    opacity: 0,
+                    duration: 0.15
+                })
+                .call(function() {
+                    textEl.textContent = 'Ready ✦';
+                })
+                .to(textEl, {
+                    opacity: 1,
+                    duration: 0.25
+                })
+                .to(progressEl, {
+                    opacity: 0,
+                    duration: 0.2
+                })
+                .to('#loader', {
+                    opacity: 0,
+                    duration: 0.7,
+                    ease: 'power2.inOut',
+                    onComplete: function() {
+                        clearTimeout(loaderFallback);
+                        document.getElementById('loader').style.display = 'none';
+                        document.body.style.overflow = '';
+                    }
+                });
+        })();
+
         // Work Category Filter
         document.querySelectorAll('.cat-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -843,6 +1082,9 @@
                 document.querySelectorAll('.work-card').forEach(card => {
                     const match = filter === 'all' || card.dataset.category === filter;
                     card.style.display = match ? '' : 'none';
+                    // Also hide/show parent link wrapper if present
+                    const link = card.closest('.work-card-link');
+                    if (link) link.style.display = match ? '' : 'none';
                 });
             });
         });
