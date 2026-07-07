@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="adi.jpg" width="120" height="120" style="border-radius:50%; border: 3px solid #ff6b35;" alt="Adi Yohanes">
+  <div style="width:120px;height:120px;border-radius:50%;border:3px solid #ff6b35;background:#1a1a1a;display:inline-flex;align-items:center;justify-content:center;font-size:2.8rem;font-weight:700;color:#ff6b35;font-family:Arial,sans-serif;">AY</div>
   <h1 align="center">Adi Yohanes</h1>
   <p align="center">
     <strong>Web × ERP Developer</strong>
