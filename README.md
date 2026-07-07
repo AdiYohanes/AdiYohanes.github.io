@@ -61,9 +61,22 @@ Fokus saya:
 |-------|--------|
 | ⚡ **Zero Dependencies** | Pure HTML + CSS + JS — no frameworks, instant load |
 | 🎨 **Dark Mode** | Modern dark theme dengan aksen oranye khas |
-| 🔄 **Tech Orbit** | Animasi tech stack yang mengorbit di sekitar foto profil |
+| 🔄 **Tech Orbit** | Animasi tech stack yang mengorbit di sekitar inisial |
 | 🏷️ **Category Filter** | Filter proyek berdasarkan kategori (Web, ERP, Integration, Full Stack) |
+| 🖼️ **Project Screenshots** | Tampilan nyata proyek dengan gambar screenshot |
 | 📱 **Responsive** | Optimal di semua ukuran layar |
+
+## 📂 Struktur Folder
+
+```
+├── assets/
+│   └── images/
+│       ├── profile/          # Foto profil
+│       └── projects/         # Screenshot project
+│           └── project-web-1/
+├── index.html
+└── README.md
+```
 
 ---
 
